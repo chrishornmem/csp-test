@@ -8,11 +8,11 @@ const cspHashOf = (text) => {
 }
 export default class MyDocument extends Document {
   render() {
-    let csp = `default-src 'self'; script-src 'self' ${cspHashOf(
+    let csp = `default-src 'self'; style-src 'self' fonts.googleapis.com; font-src fonts.gstatic.com; script-src 'self' ${cspHashOf(
       NextScript.getInlineScriptSource(this.props)
     )}`
     if (process.env.NODE_ENV !== 'production') {
-      csp = `style-src 'self' 'unsafe-inline'; font-src 'self' data:; default-src 'self'; script-src 'unsafe-eval' 'self' ${cspHashOf(
+      csp = `style-src 'self' fonts.googleapis.com 'unsafe-inline'; font-src 'self' fonts.gstatic.com data:; default-src 'self'; script-src 'unsafe-eval' 'self' ${cspHashOf(
         NextScript.getInlineScriptSource(this.props)
       )}`
     }
@@ -21,6 +21,15 @@ export default class MyDocument extends Document {
       <html>
         <Head>
           <meta httpEquiv="Content-Security-Policy" content={csp} />
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+          />
+
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap"
+          />
         </Head>
         <body>
           <Main />
